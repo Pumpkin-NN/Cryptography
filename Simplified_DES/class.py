@@ -1,4 +1,6 @@
-class Hex_to_Bin:
+import tables
+
+class basic_Operation:
     def __init__(self):
     
     #Transfer Hexadecimal to Binary
@@ -9,4 +11,19 @@ class Hex_to_Bin:
     #Print out the binary form
         print("The Binary form is: ", self.bin_num)
 
-C1 = Hex_to_Bin()
+    def __xor__(self, other):
+        print(E_xor = self.bin_num ^ other.bin_num)
+        
+
+
+class simplified_DES:
+    def f_function(self):
+        print("h")
+
+
+
+
+
+if __name__ == "__main__":
+    C2 = basic_Operation()
+
