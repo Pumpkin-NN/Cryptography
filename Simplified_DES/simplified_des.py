@@ -1,88 +1,106 @@
+# Imports 
+
+from BinNumber import BinNumber
+import global_variables as glo_var
+
+#---------------------------
+
+# functions
+
+def s_box(left, right):
+
+    segments = [left, right] # BinNumber
+    result = BinNumber(0, 'bin', 0)
+
+    for s_box, segment in zip(glo_var.S_BOX, segments):
+        col = int(segment[0] + segment[-1], 2)
+        row = int(segment[1] + segment[2], 2)
+
+        value = s_box[row][col]
+        result += BinNumber(value, 'dec', 2)
+
+    return result
+
+#---------------------------------------------------------------
+# Main 
+
 # key and cipher string
-key = '0111111101'
-cipher = '10100010'
+key = BinNumber('0111111101','bin', 10)
+cipher = BinNumber('10100010', 'bin', 8)
 
-#Simplified_DES tables
-P10 = (3, 5, 2, 7, 4, 10, 1, 9, 8, 6)
-P8 = (6, 3, 7, 4, 8, 5, 10, 9)
-P4 = (2, 4, 3, 1)
+# Initial Permutation
+permutated_cipher = cipher.transformation(glo_var.IP)
+print(permutated_cipher)
 
-IP = (2, 6, 3, 1, 4, 8, 5, 7)
-IPi = (4, 1, 3, 5, 7, 2, 8, 6)
+# Split the Initial cipher
+IP_left, IP_right = permutated_cipher.split()
+print(IP_left, IP_right)
 
-E = (4, 1, 2, 3, 2, 3, 4, 1)
+# Permutate the right part
+permutated_IP_right = IP_right.transformation(glo_var.E)
+print(permutated_IP_right)
 
-S0 = [
-        [1, 0, 3, 2],
-        [3, 2, 1, 0],
-        [0, 2, 1, 3],
-        [3, 1, 3, 2]
-     ]
+# Key Generation
+permutated_key = key.transformation(glo_var.P10)
+left, right = permutated_key.split()
 
-S1 = [
-        [0, 1, 2, 3],
-        [2, 0, 1, 3],
-        [3, 0, 1, 0],
-        [2, 1, 0, 3]
-     ]
+# Bit Shift (1)
+left, right = left << 1, right << 1
 
+combined = left + right
+k1 = combined.transformation(glo_var.P8)
+print("K1: {}".format(k1))
 
-#functions
-def permutation(perm, key):
-    permutated_key = ""
-    for i in perm:
-        permutated_key += key[i-1]
+# Bit Shift (2+1)
+left, right = left << 2, right << 2
+combined = left + right
+k2 = combined.transformation(glo_var.P8)
+print("K2: {}".format(k2))
 
-    return permutated_key
+# 'permutated_IP_right' XOR 'K2'
+xor_IP_right = (permutated_IP_right) ^ (k2)
+print(xor_IP_right)
 
-def generate_first_key(left_key, right_key):
-    left_key_rot = left_key[1:] + left_key[:1]
-    right_key_rot = right_key[1:] + right_key[:1]
-    key_rot = left_key_rot + right_key_rot
-    return permutation(P8, key_rot)
+# split xor_IP_right
+E_IP_left, E_IP_right = xor_IP_right.split()
+print(E_IP_left, E_IP_right)
 
-def generate_second_key(left_key, right_key):
-    left_key_rot = left_key[3:] + left_key[:3]
-    right_key_rot = right_key[3:] + right_key[:3]
-    key_rot = left_key_rot + right_key_rot
-    return permutation(P8, key_rot)
+# S box(k2)
+s_result_k2 = s_box(E_IP_left, E_IP_right)
 
-def F(right, subkey):
-    expanded_cipher = permutation(E, right)
-    xor_cipher = bin( int(expanded_cipher, 2) ^ int(subkey, 2) )[2:].zfill(8)
-    left_xor_cipher = xor_cipher[:4]
-    right_xor_cipher = xor_cipher[4:]
-    left_sbox_cipher = Sbox(left_xor_cipher, S0)
-    right_sbox_cipher = Sbox(right_xor_cipher, S1)
-    return permutation(P4, left_sbox_cipher + right_sbox_cipher)
+# P4 permutation(k2)
+permutated_p4_k2 = s_result_k2.transformation(glo_var.P4)
 
-def Sbox(input, sbox):
-    row = int(input[0] + input[3], 2)
-    column = int(input[1] + input[2], 2)
-    return bin(sbox[row][column])[2:].zfill(4)
+# IP_left XOR P4
+xor_P4 = (IP_left) ^ permutated_p4_k2
+print("xor_P4:{}".format(xor_P4))
 
-def f(first_half, second_half, key):
-     left = int(first_half, 2) ^ int(F(second_half, key), 2)
-     print("Fk: " + bin(left)[2:].zfill(4) + second_half)
-     return bin(left)[2:].zfill(4), second_half
+# SW function
+sw = xor_P4 + IP_right
+print("sw:{}".format(sw))
 
-p10key = permutation(P10, key)
-print(p10key)
-left = p10key[:len(p10key)//2]
-right = p10key[len(p10key)//2:]
+# permutate the right part again
+permutated_sw_right = IP_right.transformation(glo_var.E)
 
-first_key = generate_first_key(left, right)
-second_key = generate_second_key(left, right)
-print("[*] First key: " + first_key)
-print("[*] Second key: " + second_key)
+# 'permutated_sw_right' XOR 'K1'
+xor_sw_right = (permutated_sw_right) ^ (k1)
+print('xor_sw_right:{}'.format(xor_sw_right))
 
-permutated_cipher = permutation(IP, cipher)
-print("IP: " + permutated_cipher)
-first_half_cipher = permutated_cipher[:len(permutated_cipher)//2]
-second_half_cipher = permutated_cipher[len(permutated_cipher)//2:]
+# split xor_sw_right
+E_sw_left, E_sw_right = xor_sw_right.split()
 
-left, right = f(first_half_cipher, second_half_cipher, second_key)
-print("SW: " + right + left)
-left, right = f(right, left, first_key) # switch left and right!
+#S box(k1)
+s_result_k1 = s_box(E_sw_left, E_sw_right)
 
-print("IP^-1: " + permutation(IPi, left + right))
+# P4 permutation(k1)
+permutated_p4_k1 = s_result_k1.transformation(glo_var.P4)
+
+# 'P4 permutation(k1)' XOR 'xor_P4'
+xor_P4_K2 = (permutated_p4_k1) ^ (xor_P4)
+
+#result
+xor_result = xor_P4_K2 + IP_right
+
+#Final permutation
+fp = xor_result.transformation(glo_var.IPi)
+print("the plaintext is:{}".format(fp))
