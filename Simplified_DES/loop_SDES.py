@@ -59,7 +59,7 @@ print("K2: {}".format(k2))
 # DES Algorithm
 
 #Decrypt using keys
-K = (k2, k1)
+K = [k2, k1]
 
 for key in K:
 
@@ -71,21 +71,21 @@ for key in K:
         permutated_cipher = sw
 
     # Split the Initial cipher into two halves(left, right)
-    IP_left, IP_right = permutated_cipher.split()
-    print(IP_left, IP_right)
+    left, right = permutated_cipher.split()
+    print(left, right)
 
     # Split the Initial cipher into two halves(left, right)
-    IP_left, IP_right = permutated_cipher.split()
-    print(IP_left, IP_right)
+    left, right = permutated_cipher.split()
+    print(left, right)
     # Permutate the right part
-    permutated_IP_right = IP_right.transformation(glo_var.E)
-    print("e: {}".format(permutated_IP_right))
-    # 'ex_IP_right' XOR 'Key'
-    xor_IP_right = (permutated_IP_right) ^ (key)
-    print("a: {}".format(xor_IP_right))
+    permutated_right = right.transformation(glo_var.E)
+    print("e: {}".format(permutated_right))
+    # 'ex_right' XOR 'Key'
+    xor_right = (permutated_right) ^ (key)
+    print("a: {}".format(xor_right))
 
-    # split xor_IP_right
-    key_left, key_right = xor_IP_right.split()
+    # split xor_right
+    key_left, key_right = xor_right.split()
     print(key_left, key_right)
 
     # S box
@@ -94,18 +94,18 @@ for key in K:
     # P4 permutation
     permutated_p4 = s_result.transformation(glo_var.P4)
 
-    # IP_left XOR P4
-    xor_P4 = (IP_left) ^ permutated_p4
+    # left XOR P4
+    xor_P4 = (left) ^ permutated_p4
 
     if key == K[0]:
         # SW function
-        sw =  IP_right + xor_P4
+        sw =  right + xor_P4
         print("-----------------------")
         print("sw:{}".format(sw))
         print("-----------------------")
 
 # XOR result
-xor_result = xor_P4 + IP_right
+xor_result = xor_P4 + right
 print("The xor_result is:{}".format(xor_result))
 
 
