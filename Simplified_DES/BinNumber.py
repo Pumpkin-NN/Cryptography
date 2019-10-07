@@ -2,6 +2,8 @@ class BinNumber():
 
     def __init__(self, value, val_type, number_of_bits):
 
+        # Attributes for the BinNumber Class
+
         if number_of_bits == 0: # Empty BinNumber
             self.value = ""
 
@@ -49,11 +51,11 @@ class BinNumber():
         result = "".join(result)
         return BinNumber(result, 'bin', self.number_of_bits)
 
-    def __str__(self):
-        return self.value
+    # def __str__(self):
+    #     return self.value
 
-    def __repr__(self):
-        return self.value
+    # def __repr__(self):
+    #     return self.value
 
     def __add__(self, other):
         assert isinstance(other, BinNumber), "Summing wrong classes"
@@ -69,13 +71,13 @@ class BinNumber():
 
         return BinNumber(result, "bin", len(table))
 
-    def repr_hex(self):
-        return hex(int(self.value, 2))[2:].zfill(round(self.number_of_bits / 4))
+    # def repr_hex(self):
+    #     return hex(int(self.value, 2))[2:].zfill(round(self.number_of_bits / 4))
 
     def split(self):
         half_value = round(self.number_of_bits / 2)
         return BinNumber(self.value[:half_value], 'bin', half_value), BinNumber(self.value[half_value:], 'bin', half_value)
 
-    def split_8(self):
-        segmented_bin = [BinNumber(self.value[i:i+6], 'bin', round(self.number_of_bits / 8)) for i in range(0, len(self.value), 6)]
-        return segmented_bin
+    # def split_8(self):
+    #     segmented_bin = [BinNumber(self.value[i:i+6], 'bin', round(self.number_of_bits / 8)) for i in range(0, len(self.value), 6)]
+    #     return segmented_bin
