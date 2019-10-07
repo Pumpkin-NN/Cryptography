@@ -19,9 +19,8 @@ def caesar_cipher_decryption(key, ciphertext):
 # Main Function
 if __name__== "__main__":
 
+    # Choice to Encrypt or Decrypt
     choice = input("Do you want to Encrypt or Decrypt? (E/D) :\n")
-    
-
     
     if(choice == 'E'):
         # Type in the Plain Text
