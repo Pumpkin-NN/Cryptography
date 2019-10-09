@@ -74,6 +74,7 @@ if __name__ == "__main__":
         plain_text = ''
         cipher_text = affine_cipher_encryption(a, b, plaintext)
         plain_text = affine_cipher_decryption(a_1, b, cipher_text)
+        print("The b is: {}\nThe a is: {}\nThe a_1 is: {}\n".format(b, a, a_1))
         print("The Encryption result is: {}".format(cipher_text))
         print("The Original result is: {}".format(plain_text))
     else:
@@ -85,6 +86,7 @@ if __name__ == "__main__":
             plain_text = affine_cipher_decryption(a_1, b, ciphertext)
             cipher_text = ''
             cipher_text = affine_cipher_encryption(a, b, plain_text)
+            print("The b is: {}\nThe a is: {}\nThe a_1 is: {}\n".format(b, a, a_1))
             print("The Decryption result is: {}".format(plain_text))
             print("The Original result is: {}".format(cipher_text))
 
