@@ -92,6 +92,7 @@ if __name__ == "__main__":
 
 
 # Trouble Shot: VERY IMPORTANT
+# TIPS: use FIXED numbers
 """
 print("\n\n**********************************")
 
