@@ -66,5 +66,7 @@ for col in data_matrix:
     xor_result = int(xor_row_1, 2) ^ int(xor_row_2, 2) ^ int(xor_row_3, 2) ^ int(xor_row_4, 2)
     xor_result = hex(xor_result)
     output.append(xor_result)
-#Final Result
+#Ouput the Final Result
 print(output)
+
+# Final Result is ['0x28', '0x45', '0xef', '0xa']
