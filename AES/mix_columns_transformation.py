@@ -19,7 +19,7 @@ output = []
 for col in data_matrix:
     result_row_1 = []
     for i, row in enumerate(col):
-        # if the row number is 02
+        # If the Row Number is 02
         if row == 2:
             a = input_bin[i]
             a = bin(input_bin[i])[2:].zfill(8)
@@ -37,7 +37,7 @@ for col in data_matrix:
                 xor_row_1 = bin(xor_row_1)[2:].zfill(8)
                 xor_row_1 = a
                 xor_row_1 = bin(xor_row_1)[2:].zfill(8)
-        # if the row number is 03
+        # If the Row Number is 03
         elif row == 3:
             b = input_bin[i]
             b = bin(input_bin[i])[2:].zfill(8)
@@ -53,7 +53,7 @@ for col in data_matrix:
                 b = int(b, 2)
                 xor_row_2 = b ^ input_bin[i]
                 xor_row_2 = bin(xor_row_2)[2:].zfill(8)
-        # if the row number is 01
+        # If the Row Number is 01
         else:
             result_1 = bin(input_bin[i])[2:].zfill(8)
             result_row_1.append(result_1)
@@ -62,8 +62,9 @@ for col in data_matrix:
             else:
                 xor_row_3 = result_row_1[0]
                 xor_row_4 = result_row_1[1]
-    # XOR operation
+    # XOR Operation
     xor_result = int(xor_row_1, 2) ^ int(xor_row_2, 2) ^ int(xor_row_3, 2) ^ int(xor_row_4, 2)
     xor_result = hex(xor_result)
     output.append(xor_result)
+#Final Result
 print(output)
