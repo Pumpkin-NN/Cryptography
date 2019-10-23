@@ -10,10 +10,8 @@ input_hex = [0x67, 0x89, 0xAB, 0xCD]
 input_bin = []
 for i, bin_num in enumerate(input_hex):
     bin_num = bin(input_hex[i])[2:].zfill(8)
-    print(bin_num)
     bin_num = int(bin_num, 2)
     input_bin.append(bin_num)
-print(input_bin)
 
 output = []
 for col in data_matrix:
@@ -67,6 +65,25 @@ for col in data_matrix:
     xor_result = hex(xor_result)
     output.append(xor_result)
 #Ouput the Final Result
-print(output)
+output_hex = output
+print("\n\nThe results after the transformation are: {}\n\n".format(output_hex))
 
-# Final Result is ['0x28', '0x45', '0xef', '0xa']
+ 
+# Determine how many bits have changed after the mix columns transformation
+diff = []
+for a, b in zip(input_hex, output_hex):
+    input_b = int(b, 16)
+    diff_num = a ^ input_b
+    diff.append(bin(diff_num)[2:])
+print("The list of the changed bits is: {}\n\n".format(diff))
+
+diff_list = []
+for i in diff:
+    i = list(i)
+    diff_list.append(i)
+
+print("The every element in the diff_list is: {}\n\n".format(diff_list))
+
+# Because if any bits changed, the XOR result of the input_hex values and output_hex values would be 1
+count_num = sum(x.count('1') for x in diff_list)
+print("The changed bits total are: {}".format(count_num))
