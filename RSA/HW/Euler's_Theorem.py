@@ -1,8 +1,21 @@
 import math
 
+# Global Variable
 NUM = 100
 
-def Algorithm(NUM):
+
+'''
+This is the function to:
+
+#1 Find out the coprime numbers of a random number.
+
+#2 Count the modolus of the coprime numbers of the random number and the random number.
+
+Input: number(int)
+Output: modulos(int)
+
+'''
+def Euler_Algorithm(NUM):
     for NUM in range(2, 100):
         print("\n*****************************************************\n")
         print("The number is: {}".format(NUM))
@@ -54,4 +67,5 @@ def Algorithm(NUM):
         final_modulo = first_last_modulo * middle_modulo
         print("The overall modulo is: {}".format(final_modulo))
         print("*****************************************************\n")
-Algorithm(NUM)
+
+Euler_Algorithm(NUM)
