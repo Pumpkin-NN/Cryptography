@@ -54,6 +54,7 @@ def Euler_Algorithm(NUM):
                 middle_numbers.append(co_prime_numbers[-1 - j])
         #print(middle_numbers)
 
+        # Multiply the middle elements
         multiply_total = 1
         middle_modulo = 1
         for n in range(len(middle_numbers)):
@@ -64,6 +65,7 @@ def Euler_Algorithm(NUM):
 
         print("The middle module is :{}".format(middle_modulo))
 
+        # Find out the overall modulo
         final_modulo = first_last_modulo * middle_modulo
         print("The overall modulo is: {}".format(final_modulo))
         print("*****************************************************\n")
