@@ -7,14 +7,11 @@ Description: the foundation of the RSA algorithm
 import random
 from EEA import extended_euclidean_algorithm
 
-
 # Choose two prime numbers
 P = 17
 Q = 11
 # Calculate the N
 N = P * Q
-
-
 
 # Function: find the greatest common divisor
 def gcd(a, b):
