@@ -24,11 +24,11 @@ def gcd(a, b):
 
 # Fuction: calculate Φ(N)
 def phi_N():
-    sum_phi_N = 0
+    phi_N = 0
     for i in range(1, N):
         if gcd(i, N) == 1:
-            sum_phi_N = sum_phi_N + 1
-    return sum_phi_N
+            phi_N = phi_N + 1
+    return phi_N
 
 # Function: Select e, such that e is relatively prime to Φ(N)
 e_list = []
