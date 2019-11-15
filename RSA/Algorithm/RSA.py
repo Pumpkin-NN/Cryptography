@@ -31,8 +31,8 @@ def phi_N():
     return phi_N
 
 # Function: Select e, such that e is relatively prime to Φ(N)
-e_list = []
 def choose_e(val):
+    e_list = []
     for i in range(1, phi_n):
         if gcd(i, phi_n) == 1 and i < phi_n:
             e_list.append(i)
