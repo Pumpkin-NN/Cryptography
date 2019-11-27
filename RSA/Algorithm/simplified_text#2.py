@@ -5,8 +5,6 @@ IndexTable = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q
               "S","T","U","V","W","X","Y","Z"," ",".","?","$","0","1","2","3","4","5",
               "6","7","8","9"]
 
-
-
 def string2num(*List):
     message = copy.deepcopy(*List)
     num = []
@@ -47,7 +45,6 @@ def ciphertext_trigraphs(*List):
         trigraphs.append(c)
     return trigraphs
 
-
 def num2string(*List):
     List = copy.deepcopy(*List)
     # Convert it into the text
@@ -81,9 +78,6 @@ def ciphertext_encryption_graphs(Encrypted_Message, blocks, base):
     print("length:{}".format(length))
     print("segment:{}".format(segment))
     
-
-    # TODO
-
     chunks = []
     for i in range(0, len(Encrypted_Message), blocks):
         chunk = Encrypted_Message[i:i+blocks]
@@ -105,6 +99,7 @@ def ciphertext_encryption_graphs(Encrypted_Message, blocks, base):
                     num_chunks = chunks_nums
                     nums_chuncks.append(num_chunks)
     print(nums_chuncks)
+    return nums_chuncks
             # Calculation Procedure
             # chunks_nums = (base**0) * sub_chuncks[k+6] + \
             #               (base**1) * sub_chuncks[k+5] + \
@@ -114,99 +109,91 @@ def ciphertext_encryption_graphs(Encrypted_Message, blocks, base):
             #               (base**5) * sub_chuncks[k+1] + \
             #               (base**6) * sub_chuncks[k] + \
 
-    
-    #p = (chunks_nums ** pri_key) % n
-
-    # # PowerMod Calculator
-    # p1 = 45005201 
-
-    # #p2 = (cipher_second_nums ** pri_key) % n
-
-    # # PowerMod Calculator
-    # p2 = 56094542
-
-    # p = [p1, p2]
-    # return p
-
-def plaintext_decryption_graphs(*List):
+def plaintext_decryption_graphs(blocks, base, *List):
     List = copy.deepcopy(*List)
-    text = []
+    plaintext_nums = []
     for i in List:
-        sixth_block = i // (26**5)
-        text.append(sixth_block)
-
-        r1 = i % (26**5)
-        fifth_block = r1 // (26**4)
-        text.append(fifth_block)
-
-        r2 = r1 % (26**4)
-        fourth_block = r2 // (26**3)
-        text.append(fourth_block)
-
-        r3 = r2 % (26**3)
-        third_block = r3 // (26**2)
-        text.append(third_block)
-
-        r4 = r3 % (26**2)
-        second_block = r4 // (26**1)
-        text.append(second_block)
-
-        r5 = r4 % (26**1)
-        first_block = r5
-        text.append(first_block)
-    return text
-
-def encryption_question1(nums):
-    result = []
-    # Encryption
-    for num in nums:
-        result.append((num ** 179) % 2047)
-
-    return result
-
-
-def problem1():
-    # Problem #1 (1)
-    print("\n-------------Problem #1-------------\n")
+        remainder = i
+        for index in range(blocks):
+            co_num = blocks -1 - index
+            plaintext_num = remainder // (base ** (co_num))
+            remainder = i % (26 ** (co_num))
+            plaintext_nums.append(plaintext_num)
+    print(plaintext_nums)
+    return plaintext_nums
     
+def rsa_algorithm(key, n, *List):
+    List = copy.deepcopy(*List)
+    results = []
+    # Encryption and Decryption
+    for num in List:
+        result = pow(num, key) % n
+        results.append(result)
+    return results
+
+def example1():
+    print("\n-------------example #1-------------\n")
+
     message = "SEND $7500"
     message = list(message)
-    
+    print("plaintext: {}".format("".join(message)))
+
     num = string2num(message)
-    print("num:{}".format(num))
     digraphs = plaintext_digraphs(num)
     
-    print("plaintext: {}".format("".join(message)))
-    
-    #trigraphs = ciphertext_trigraphs(digraphs)
-    trigraphs = encryption_question1(digraphs)
-    pri_key = 201934721
-    n = 536813567
-    num_ciphertext = ciphertext_encryption_graphs(message, 2, 40)
-    # ciphertext = num2string(num_ciphertext)
-    # print("ciphertext: {}".format(ciphertext))
+    pub_key = 179
+    n = 2047
 
-def problem2():
-    # Problem #2
-    print("\n-------------Problem #2-------------\n")
+    num_ciphertext = ciphertext_encryption_graphs(message, 2, 40)
+    trigraphs = rsa_algorithm(pub_key, n, num_ciphertext)
+    print(trigraphs)
+    # TODO 
+    ciphertext = num2string(trigraphs)
+    print("ciphertext: {}".format(ciphertext))
+
+def example2():
+    print("\n-------------example #2-------------\n")
     # The Encrypted Message
     Encrypted_Message = "ARHILFKAODSTOSBSTWFQL"
     Encrypted_Message = list(Encrypted_Message)
-    # Find the private key
-    #pri_key = RSA(3602561,536813567)
+    
     n = 536813567
     pri_key = 201934721
-    p = []
-    p = ciphertext_encryption_graphs(Encrypted_Message, 7, 26)
-    # plaintext = []
-    # plaintext = plaintext_sixgraphs(p)
-    # text = num2string(plaintext)
-    # print("The Decrypted Message is: {}".format(text))
+    cipher_num = []
+    cipher_num = ciphertext_encryption_graphs(Encrypted_Message, 7, 26)
+    #text_num = rsa_algorithm(pri_key, n, cipher_num)
+    # Modular Exponentiation Calculator
+    cipher_num = [20002966, 11198842, 12223445]
+    print("After Modular:{}".format(cipher_num))
+    plaintext_nums = plaintext_decryption_graphs(6, 26, cipher_num)
+
+    plaintext = num2string(plaintext_nums)
+    print(plaintext)
+
+def example3():
+    print("\n-------------example #3-------------\n")
+    # The Encrypted Message
+    Encrypted_Message = "BNBPPKZAVQZLBJ"
+    Encrypted_Message = list(Encrypted_Message)
+    
+    n = 536813567
+    pri_key = 201934721
+    cipher_num = []
+    cipher_num = ciphertext_encryption_graphs(Encrypted_Message, 7, 26)
+    #text_num = rsa_algorithm(pri_key, n, cipher_num)
+    # Modular Exponentiation Calculator
+    cipher_num = [45005201, 56094542]
+    print("After Modular:{}".format(cipher_num))
+    plaintext_nums = plaintext_decryption_graphs(6, 26, cipher_num)
+
+    plaintext = num2string(plaintext_nums)
+    print(plaintext)
 
 if __name__== "__main__":
     
-    problem1()
-    problem2()
+    #example1()
+    example2()
+    example3()
     
 
 
