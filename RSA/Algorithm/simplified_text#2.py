@@ -25,7 +25,7 @@ def num2string(*List):
     text = ''.join(text)
     return text
 
-# Useless function, just a reference in this code
+# Useless function, as a reference in this code
 def RSA(pub_key,n):
     floor_number = math.floor(math.sqrt(n))
     for i in range(1, floor_number):
