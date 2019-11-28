@@ -10,23 +10,19 @@ IndexTable = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q
 def string2num(*List):
     message = copy.deepcopy(*List)
     num = []
-    for i in message:
-        for j in IndexTable:
-            if i == j:
-                num.append(IndexTable.index(j))
-                #print("numerircal: {}".format(num))
-    #print("num:{}".format(num))
+    for element in message:
+        for index in IndexTable:
+            if element == index:
+                num.append(IndexTable.index(index))
     return num
 
 # Convert numbers to string
 def num2string(*List):
     List = copy.deepcopy(*List)
-    # Convert it into the text
     text = []
     for j in range(len(List)):
         text.append(IndexTable[List[j]])
     text = ''.join(text)
-    
     return text
 
 # Useless function, just a reference in this code
@@ -36,13 +32,10 @@ def RSA(pub_key,n):
         if n % i == 0 and i != 1:
             p = i
             q = n // i
-
     phi_n = (p-1) * (q-1)
-
     for j in range(1, n):
         if (j * pub_key) % phi_n == 1:
             pri_key = j
-
     return pri_key
 
 # Transfer graphs 1
@@ -99,11 +92,10 @@ def graphs_transfer(blocks, base, *List):
     print(plaintext_nums)
     return plaintext_nums
 
-# RSA Algorithm: calculate the private key
+# RSA Algorithm: encryption or decryption
 def rsa_algorithm(key, n, *List):
     List = copy.deepcopy(*List)
     results = []
-    # Encryption and Decryption
     for num in List:
         result = pow(num, key) % n
         results.append(result)
@@ -140,7 +132,7 @@ def example2():
     cipher_num = []
     cipher_num = transfer_graphs(Encrypted_Message, 7, 26)
     #text_num = rsa_algorithm(pri_key, n, cipher_num)
-    # Modular Exponentiation Calculator
+    # Use Modular Exponentiation Calculator
     cipher_num = [20002966, 11198842, 12223445]
     print("After Modular:{}".format(cipher_num))
     plaintext_nums = graphs_transfer(6, 26, cipher_num)
@@ -170,7 +162,6 @@ def example3():
 
 # Main function
 if __name__== "__main__":
-    
     example1()
     example2()
     example3()
