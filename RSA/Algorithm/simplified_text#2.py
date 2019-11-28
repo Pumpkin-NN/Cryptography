@@ -1,10 +1,12 @@
 import copy
 import math
 
+# Create an index table for the later references
 IndexTable = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R",
               "S","T","U","V","W","X","Y","Z"," ",".","?","$","0","1","2","3","4","5",
               "6","7","8","9"]
 
+# Convert string to numbers
 def string2num(*List):
     message = copy.deepcopy(*List)
     num = []
@@ -16,6 +18,7 @@ def string2num(*List):
     #print("num:{}".format(num))
     return num
 
+# Convert numbers to string
 def num2string(*List):
     List = copy.deepcopy(*List)
     # Convert it into the text
@@ -26,6 +29,7 @@ def num2string(*List):
     
     return text
 
+# Useless function, just a reference in this code
 def RSA(pub_key,n):
     floor_number = math.floor(math.sqrt(n))
     for i in range(1, floor_number):
@@ -41,6 +45,7 @@ def RSA(pub_key,n):
 
     return pri_key
 
+# Transfer graphs 1
 def transfer_graphs(Encrypted_Message, blocks, base):
     length = len(Encrypted_Message)
     segment = length // blocks
@@ -80,6 +85,7 @@ def transfer_graphs(Encrypted_Message, blocks, base):
             #               (base**5) * sub_chuncks[k+1] + \
             #               (base**6) * sub_chuncks[k] + \
 
+# Transfer graphs 2
 def graphs_transfer(blocks, base, *List):
     List = copy.deepcopy(*List)
     plaintext_nums = []
@@ -92,7 +98,8 @@ def graphs_transfer(blocks, base, *List):
             plaintext_nums.append(plaintext_num)
     print(plaintext_nums)
     return plaintext_nums
-    
+
+# RSA Algorithm: calculate the private key
 def rsa_algorithm(key, n, *List):
     List = copy.deepcopy(*List)
     results = []
@@ -102,6 +109,7 @@ def rsa_algorithm(key, n, *List):
         results.append(result)
     return results
 
+# Test the first example
 def example1():
     print("\n-------------example #1-------------\n")
     # Plain Message
@@ -119,7 +127,8 @@ def example1():
     encrypted_message_nums = graphs_transfer(3, 40, cipher_num)
     encrypted_message = num2string(encrypted_message_nums)
     print("ciphertext: {}".format(encrypted_message))
-    
+
+# Test the second example    
 def example2():
     print("\n-------------example #2-------------\n")
     # The Encrypted Message
@@ -139,6 +148,7 @@ def example2():
     plaintext = num2string(plaintext_nums)
     print(plaintext)
 
+# Test the third example
 def example3():
     print("\n-------------example #3-------------\n")
     # The Encrypted Message
@@ -158,6 +168,7 @@ def example3():
     plaintext = num2string(plaintext_nums)
     print(plaintext)
 
+# Main function
 if __name__== "__main__":
     
     example1()
