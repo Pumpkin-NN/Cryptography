@@ -117,8 +117,6 @@ def example1():
     print(cipher_num)
 
     encrypted_message_nums = graphs_transfer(3, 40, cipher_num)
-    print(encrypted_message_nums)
-
     encrypted_message = num2string(encrypted_message_nums)
     print("ciphertext: {}".format(encrypted_message))
     
