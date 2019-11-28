@@ -9,27 +9,12 @@ def string2num(*List):
     message = copy.deepcopy(*List)
     num = []
     for i in message:
-        #print("i: {}".format(i))
         for j in IndexTable:
             if i == j:
                 num.append(IndexTable.index(j))
                 #print("numerircal: {}".format(num))
     #print("num:{}".format(num))
     return num
-
-def plaintext_digraphs(*List):
-    List = copy.deepcopy(*List)
-    digraphs = []
-    for i in range(len(List)):
-        if i % 2 != 0:
-            continue
-        if i + 1 == len(List):
-            break
-        else:
-            num = 40 * (List[i]) + 1 * (List[i+1])
-
-        digraphs.append(num)
-    return digraphs
 
 def ciphertext_trigraphs(*List):
 
@@ -133,24 +118,24 @@ def rsa_algorithm(key, n, *List):
 
 def example1():
     print("\n-------------example #1-------------\n")
-
+    # Plain Message
     message = "SEND $7500"
     message = list(message)
     print("plaintext: {}".format("".join(message)))
 
-    num = string2num(message)
-    digraphs = plaintext_digraphs(num)
-    
+    digraphs = ciphertext_encryption_graphs(message, 2, 40)
+
     pub_key = 179
     n = 2047
+    cipher_num = rsa_algorithm(pub_key, n, digraphs)
+    print(cipher_num)
 
-    num_ciphertext = ciphertext_encryption_graphs(message, 2, 40)
-    trigraphs = rsa_algorithm(pub_key, n, num_ciphertext)
-    print(trigraphs)
-    # TODO 
-    ciphertext = num2string(trigraphs)
-    print("ciphertext: {}".format(ciphertext))
+    encrypted_message_nums = ciphertext_trigraphs(cipher_num)
+    print(encrypted_message_nums)
 
+    encrypted_message = num2string(encrypted_message_nums)
+    print("ciphertext: {}".format(encrypted_message))
+    
 def example2():
     print("\n-------------example #2-------------\n")
     # The Encrypted Message
@@ -191,7 +176,7 @@ def example3():
 
 if __name__== "__main__":
     
-    #example1()
+    example1()
     example2()
     example3()
     
