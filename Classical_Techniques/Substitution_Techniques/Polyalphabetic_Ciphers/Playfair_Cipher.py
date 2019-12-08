@@ -24,7 +24,7 @@ def playfair_cipher(cipher,*List):
 
 
 if __name__== "__main__":
-    table = table()
     cipher = input("Please type in the cipher:\n")
     print("The new index table is:")
+    table = table()
     playfair_cipher(cipher, table)
