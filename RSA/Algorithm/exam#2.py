@@ -1,8 +1,8 @@
 import copy
 import math
 
-IndexTable = ["A","B","C","D","E","E","G","H","I","J","K","L","M","N","O","P","Q","R",
-              "S","T","U","V","W","X","Y","Z","' '",".","?","$","0","1","2","3","4","5",
+IndexTable = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R",
+              "S","T","U","V","W","X","Y","Z"," ",".","?","$","0","1","2","3","4","5",
               "6","7","8","9"]
 
 
@@ -11,9 +11,12 @@ def string2num(*List):
     message = copy.deepcopy(*List)
     num = []
     for i in message:
+        #print("i: {}".format(i))
         for j in IndexTable:
             if i == j:
                 num.append(IndexTable.index(j))
+                #print("numerircal: {}".format(num))
+    #print("num:{}".format(num))
     return num
 
 def plaintext_digraphs(*List):
@@ -35,8 +38,10 @@ def ciphertext_trigraphs(*List):
     trigraphs = []
     for i in range(len(List)):
         a = List[i] // (40**2)
-        b = ( List[i] - (a * List[i]) ) // 40
-        c = ( List[i] - (a * List[i]) ) % 40
+        r1 = List[i] - (a * (40**2))
+        b = r1 // 40
+        r2 = List[i] - (a * (40**2) + b * 40)
+        c = r2 % 40
         trigraphs.append(a)
         trigraphs.append(b)
         trigraphs.append(c)
@@ -48,9 +53,8 @@ def num2string(*List):
     text = []
     for j in range(len(List)):
         text.append(IndexTable[List[j]])
-    text = ''.join(text)
-    print(text)
-    print("")
+    
+    return "".join(text)
 
 def RSA(pub_key,n):
     floor_number = math.floor(math.sqrt(n))
@@ -159,16 +163,16 @@ if __name__== "__main__":
     message = "SEND $7500"
     message = list(message)
     num = string2num(message)
-    digraphs = plaintext_digraphs(num) # This is correct!
-    print("The Plaintext is:\nSEND $7500\n")
+    print("num:{}".format(num))
+    digraphs = plaintext_digraphs(num)
+    print(digraphs)
     print("The Ciphertext is:")
     trigraphs = ciphertext_trigraphs(digraphs)
-    num2string(trigraphs)
+    print("trigraphs: {}".format(trigraphs))
+    text = num2string(trigraphs)
+    print(text)
     
-        # Validation
-    #num = string2num("BAAAVOBAAAJEAR0")
-    #cipher = plaintext_digraphs(num)
-    #print(cipher)
+    '''
     # Problem #1 (2)
     private_key = RSA(179, 2047)
     print("The decipher key is:\n({}, {})".format(2047, private_key))
@@ -188,4 +192,4 @@ if __name__== "__main__":
     plaintext = plaintext_sixgraphs(p)
     print("The Decrypted Message is: ")
     num2string(plaintext)
-
+    '''

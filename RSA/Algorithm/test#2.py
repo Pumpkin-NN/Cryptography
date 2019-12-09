@@ -117,7 +117,6 @@ def ciphertext_sevengraphs(Encrypted_Message,pri_key,n):
                              (26**2) * ciphertext_second[j+4] + \
                              (26**1) * ciphertext_second[j+5] + \
                              (26**0) * ciphertext_second[j+6]
-
     #p1 = (cipher_first_nums ** pri_key) % n
 
     # PowerMod Calculator
@@ -175,6 +174,7 @@ if __name__== "__main__":
     message = list(message)
     
     num = string2num(message)
+    print("num:{}".format(num))
     digraphs = plaintext_digraphs(num)
     
     print("plaintext: {}".format("".join(message)))

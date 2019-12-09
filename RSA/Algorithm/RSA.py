@@ -8,10 +8,11 @@ import random
 from EEA import extended_euclidean_algorithm
 
 # Choose two prime numbers
-P = 17
-Q = 11
+#P = 17
+#Q = 11
 # Calculate the N
-N = P * Q
+#N = 2047
+N = 536813567
 
 # Function: find the greatest common divisor
 def gcd(a, b):
@@ -30,6 +31,7 @@ def phi_N():
             phi_N = phi_N + 1
     return phi_N
 
+
 # Function: Select e, such that e is relatively prime to Φ(N)
 def choose_e(val):
     e_list = []
@@ -41,12 +43,11 @@ def choose_e(val):
     return e_list[2]
 
 # Function: Determine d, such d and e are multiplicative inverse
-def determine_d(val_1, val_2):
-    d = abs(extended_euclidean_algorithm(phi_n, e))
-    if d < phi_n:
-        return d
-    else:
-      return -1
+def determine_d(a, m):
+    for x in range(1, m) : 
+        if ((a * x) % m == 1) : 
+            return x 
+    return 1
 
 # Main Function
 if __name__== "__main__":
@@ -55,11 +56,13 @@ if __name__== "__main__":
     print("phi_n value is: ", phi_n)
 
     # Select e, we choose 7 in this case
-    e = choose_e(phi_n)
+    #e = 179
+    e = 3602561
     print("e value is: ", e)
 
     # Determine d
-    d = determine_d(phi_n, e)
+    d = determine_d(179, phi_n)
+    print("Make sure a less than m!") 
     print("Calculate the d is: ", d)
 
     # The resulting public key

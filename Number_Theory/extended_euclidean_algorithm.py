@@ -25,15 +25,15 @@ def extended_euclidean_algorithm(a, b):
 
         # Use b to be the new a
         a = b
-        if r > 0:
+        if r == 0:
+            break
+        else:
             # Use the remainder to be the new b
             b = r
-
             print("the r is {}".format(r))
             print("the a is {}".format(a))
             print("the b is {}".format(b))
-        else:
-            break
+        
         print("--------------------------------------")
 
     print(list_s, list_t)
@@ -53,6 +53,6 @@ def extended_euclidean_algorithm(a, b):
 
 
 # Sample
-coefficients = extended_euclidean_algorithm(7, 3)
+coefficients = extended_euclidean_algorithm(179,1936)
 print("\n\n\n---------------------------")
 print("The result is: \ns = {}, t = {}".format(coefficients[0], coefficients[1]))
