@@ -53,6 +53,7 @@ def extended_euclidean_algorithm(a, b):
 
 
 # Sample
+# TODO Algorithm check
 coefficients = extended_euclidean_algorithm(179,1936)
 print("\n\n\n---------------------------")
 print("The result is: \ns = {}, t = {}".format(coefficients[0], coefficients[1]))

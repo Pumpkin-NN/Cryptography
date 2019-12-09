@@ -1,4 +1,4 @@
-
+# Find the greatest common divisor using the Euclidean Algorithm
 def euclidean_algorithm(a, b):
     while b > 0:
         print("({}, {})\n".format(a, b))
