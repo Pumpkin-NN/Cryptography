@@ -1,7 +1,5 @@
-# Method 1, find all the inverse, if and only if the inverses exists
-# This method is limited!
-mport math
-from find_inverse import find_inverse
+# TODO chinese_remainder_theorem
+import math
 def CRT(Reminder, Divisor):
     # Check if each element in Divisor coprime or not
     if math.gcd(Divisor[0],Divisor[1]) == 1 and \
@@ -11,46 +9,45 @@ def CRT(Reminder, Divisor):
         product = 1
         for ele in Divisor:
             product = product*ele
-        print("The product is: {}".format(product))
+        #print("The product is: {}".format(product))
 
         # Create a new list
         List = []
         for i in Divisor:
             new_ele = product // i
             List.append(new_ele)
-        print("The List is: {}".format(List))
-
-        # Analyse each reminder related to another specific element
-        # d: divisor
-        # e: each element
-        Inverse = []
-        for d,e,re in zip(Divisor, List, Reminder):
-            inverse_num = find_inverse(d, e)
-            Inverse.append(inverse_num)
-        print("The List of inverse is: {}".format(Inverse))
+        #print("The List is: {}".format(List))
 
         Sum_List = []
-        for inv,l,r in zip(Inverse, List, Reminder):
-            sum_num = inv * l * r
-            Sum_List.append(sum_num)
-        print("The sum list is: {}".format(Sum_List))
+        for r, d, l in zip(Reminder, Divisor, List):
+            if l % d == r:
+                Sum_List.append(l)
+            else:
+                m = l % d
+                for x in range(1, 1000):
+                    if (m * x) % d == r:
+                        sum_num = l * x
+                        Sum_List.append(sum_num)
+                        break
+        #print(Sum_List)
 
         Num = 0
         for j in Sum_List:
             Num = (Num + j) % product
-
+        
         # Validation
         Reminder_List = []
         for di in Divisor:
             reminder_num = Num % di
             Reminder_List.append(reminder_num)
         if Reminder_List == Reminder:
-            print("The result is true and this is only true if the inverses exists\nAnd the result is: {}".format(Num))
+            print("The result is true and and the result is: {}".format(Num))
         else:
-            print("The result is wrong, because some inverses does not exist")
-
+            print("The result is wrong")
+        
     else:
         print("The divisors should be coprime to each other!")
+
 if __name__ == '__main__': 
     # Sample 1
     CRT([3,1,6],[5,7,8])
