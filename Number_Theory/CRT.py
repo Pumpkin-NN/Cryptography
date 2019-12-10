@@ -1,4 +1,3 @@
-# TODO chinese_remainder_theorem
 import math
 def CRT(Reminder, Divisor):
     # Check if each element in Divisor coprime or not
