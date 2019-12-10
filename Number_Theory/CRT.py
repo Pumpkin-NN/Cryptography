@@ -40,7 +40,7 @@ def CRT(Reminder, Divisor):
             reminder_num = Num % di
             Reminder_List.append(reminder_num)
         if Reminder_List == Reminder:
-            print("The result is true and and the result is: {}".format(Num))
+            print("The result is true and and the result is: {}\n".format(Num))
         else:
             print("The result is wrong")
         
@@ -51,8 +51,9 @@ if __name__ == '__main__':
     # Sample 1
     CRT([3,1,6],[5,7,8])
 
-    print("------------------------------")
-
     # Sample 2
     CRT([2,2,1],[3,4,5])
+
+    # Sample 3
+    CRT([3,4,7],[4,7,9])
 
